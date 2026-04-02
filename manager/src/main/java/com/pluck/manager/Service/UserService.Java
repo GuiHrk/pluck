@@ -22,11 +22,11 @@ public class UserService {
     }
 
     public User getById(Long id) {
-        return userRepository.findById(id);
+        return userRepository.findById(id).orElse(null);
     }
 
     public void delete(Long id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 }
 // Service : Recebe os dados ; Tomada de decisão do que realizar com eles ; Chama o repository (repositório)
