@@ -21,4 +21,25 @@ public class TasksService {
         return tasksRepository.findAll();
     }
 
+    public Tasks getById(Long id){
+        return tasksRepository.findById(id).orElse(null);
+    }
+
+    public Tasks update(Long id, Tasks tasks){
+        Tasks existing = tasksRepository.findById(id).orElse(null);
+
+        if (existing != null){
+            existing.setTitle(tasks.getTitle());
+            existing.setDescription(tasks.getDescription());
+            existing.setStatus(tasks.getStatus());
+            return tasksRepository.save(existing);
+        }
+        return null;
+    }
+
+    public void delete(Long id){
+        tasksRepository.deleteById(id);
+    }
+
+
 }
