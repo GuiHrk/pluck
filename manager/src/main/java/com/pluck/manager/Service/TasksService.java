@@ -1,7 +1,10 @@
 package com.pluck.manager.service;
 
+import com.pluck.manager.entity.User;
 import com.pluck.manager.entity.Tasks;
 import com.pluck.manager.repository.TasksRepository;
+import com.pluck.manager.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +13,30 @@ import java.util.List;
 @Service
 public class TasksService {
 
+  
+    @Autowired
+    private UserRepository userRepository;
+
     @Autowired
     private TasksRepository tasksRepository;
+
+    public Tasks create(Tasks tasks){
+
+        if (tasks.getUser() == null || tasks.getUser().getId() == null) {
+            throw new RuntimeException("User é obrigatório");
+        }
     
-    public Tasks createTasks(Tasks tasks){
+        if(tasks.getStatus() == null){
+            tasks.setStatus("PENDENTENTE");
+        }
+
+        Long userId = tasks.getUser().getId();
+    
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User não encontrado"));
+    
+        tasks.setUser(user);
+    
         return tasksRepository.save(tasks);
     }
 
@@ -41,5 +64,12 @@ public class TasksService {
         tasksRepository.deleteById(id);
     }
 
+    public List<Tasks> getByUser(Long userId){
+        return tasksRepository.findByUser_Id(userId);
+    }
+
+    public List<Tasks> getByGroup(Long groupId){
+        return tasksRepository.findByGroup_Id(groupId);
+    }
 
 }

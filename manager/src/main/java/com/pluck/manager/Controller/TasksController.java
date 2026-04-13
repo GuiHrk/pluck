@@ -16,7 +16,7 @@ public class TasksController {
 
     @PostMapping
     public Tasks create(@RequestBody Tasks tasks){
-        return tasksService.createTasks(tasks);
+        return tasksService.create(tasks);
     }
 
     @GetMapping
@@ -36,6 +36,16 @@ public class TasksController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
         tasksService.delete(id);
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<Tasks> getByUser(@PathVariable Long userId){
+        return tasksService.getByUser(userId);
+    }
+
+    @GetMapping("/group/{groupId}")
+    public List<Tasks> getByGroup(@PathVariable Long groupId){
+        return tasksService.getByGroup(groupId);
     }
 
 }
