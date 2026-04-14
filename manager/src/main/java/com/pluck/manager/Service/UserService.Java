@@ -28,5 +28,18 @@ public class UserService {
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
+
+    public User login(String email, String password){
+        
+        User user = userRepository.findByEmail(email);
+        
+        if(user == null){
+            throw new  RuntimeException("Usuário não encontrado");
+        }
+        if(!user.getPassword().equals(password)){
+            throw new RuntimeException("Senha inválida");
+        }
+        return user;
+    }
 }
 // Service : Recebe os dados ; Tomada de decisão do que realizar com eles ; Chama o repository (repositório)
