@@ -4,23 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="register.css">
 </head>
 <body>
 
   <div class="container">
     <h2>Cadastro</h2>
 
-    <input type="text" id="nome" placeholder="Nome completo">
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="senha" placeholder="Senha">
-    <input type="password" id="confirmar" placeholder="Confirmar senha">
+    <form id="cadastroForm">
+    <input type="text" id="name" placeholder="Nome" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Senha" required>
 
-    <button onclick="cadastrar()">Cadastrar</button>
+    <button type="submit">Cadastrar</button>
+    </form>
 
     <div class="msg" id="msg"></div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="register.js"></script>
 </body>
 </html>
