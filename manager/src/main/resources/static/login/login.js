@@ -7,7 +7,10 @@ if(form){
     const email = document.getElementById("email")?.value;
     const password = document.getElementById("password")?.value;
 
-    console.log(email, password);
+    if (!email || !password) {
+      alert("Preencha todos os campos");
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:8080/users/login", {
@@ -23,9 +26,13 @@ if(form){
 
       if(response.ok){
         const data = await response.json();
-        alert("Login realizado com sucesso!");
 
+        localStorage.setItem("user", JSON.stringify(data));
+
+        alert("Login realizado com sucesso!");
         console.log("Usuário:", data);
+
+        window.location.href = "/kanban/kanban.html";
 
       } else {
         alert("Email ou senha inválidos!");

@@ -1,46 +1,95 @@
-const tasks = document.querySelectorAll(".task");
-const columns = document.querySelectorAll(".column");
+document.addEventListener("DOMContentLoaded", async () => {
 
-let dragged = null;
-tasks.forEach(task => {
-    task.addEventListener("dragstart", () => {
-        dragged = task;
-    });
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if(!user) {
+        alert("Usuário não encontrado");
+        window.location.href = "/login/login.html";
+        return;    
+    }
+
+    try{
+        const response = await fetch(`http://localhost:8080/tasks/user/${user.id}`);
+        const tasks = await response.json();
+
+        renderTasks(tasks);
+        setupAddButtons(user);
+
+    } catch (error){
+        console.error("Erro ao carregar Tarefas:", error);
+    }
 });
 
-columns.forEach(column => {
+function renderTasks(tasks) {
 
-    column.addEventListener("dragover", (e) => {
-        e.preventDefault();
-    });
+    const todo = document.querySelector("#todo .tasks-container");
+    const doing =document.querySelector("#doing .tasks-container"); 
+    const done = document.querySelector("#done .tasks-container");  
 
-    column.addEventListener("drop", () => {
-        column.appendChild(dragged);
-    });
+    todo.innerHTML = "";
+    doing.innerHTML = "";
+    done.innerHTML = "";
 
-});
+    tasks.forEach(task => {
+       
+        const taskElement = document.createElement("div");
+        taskElement.classList.add("task");
+        taskElement.setAttribute("draggable", "true");
+        taskElement.innerText = task.title;
 
-document.querySelectorAll(".add-btn").forEach(btn => {
+        const status = task.status?.toLowerCase();
 
-    btn.addEventListener("click", () => {
-
-        let text = prompt("Nome da tarefa:");
-
-        if(text){
-
-            let newTask = document.createElement("div");
-            newTask.classList.add("task");
-            newTask.setAttribute("draggable", "true");
-            newTask.innerText = text;
-
-            // reativar drag
-            newTask.addEventListener("dragstart", () => {
-                dragged = newTask;
-            });
-
-            btn.parentElement.insertBefore(newTask, btn);
+        if(task.status === "Pendente"){
+            todo.appendChild(taskElement);
+        }
+        else if(task.status === "Em Progresso"){
+            doing.appendChild(taskElement);
+        }
+        else if(task.status === "Concluida"){
+            done.appendChild(taskElement);
         }
 
     });
+}
 
-});
+function setupAddButtons(user){
+document.querySelectorAll(".add-btn").forEach(btn =>{
+    btn.addEventListener("click", async () => {
+        
+        const title = prompt("Nome da tarefa:");
+   
+        if (!title) return;
+
+        const description = prompt("Descrição da tarefa:");
+
+        const status = prompt("Status (Pendente, Em Progresso, Concluida):" || "Pendente");
+
+      try{ 
+        const response = await fetch("http://localhost:8080/tasks", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            title: title,
+            description: description,
+            status: status,
+            user: { id: user.id}
+        })
+    });
+ 
+    if(!response.ok){
+        throw new Error("Erro ao criar tarefa");
+    }
+
+   const newTask = await response.json();
+
+   renderTasks([newTask]);
+
+    } catch (error) {
+        console.error("Erro ao criar tarefa:", error);
+        alert("Erro ao criar tarefa");
+      }
+    });
+  });
+}

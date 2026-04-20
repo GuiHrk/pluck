@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TaskFlow</title>
+<title>Pluck manager</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -20,34 +20,29 @@
 
 <div class="board">
 
-<div class="column">
-<h5>To do</h5>
-
-<div class="task" draggable="true">Criar layout</div>
-<div class="task" draggable="true">Estudar JS</div>
-
-<button class="add-btn">+ Adicionar</button>
-</div>
-<div class="column">
-<h5>Doing</h5>
-
-<div class="task" draggable="true">Desenvolvendo tela</div>
-
-<button class="add-btn">+ Adicionar</button>
-</div>
-<div class="column">
-<h5>Done</h5>
-
-<div class="task done" draggable="true">Wireframe pronto</div>
-
-<button class="add-btn">+ Adicionar</button>
-</div>
+    <div class="column" id="todo">
+        <h5>To do</h5>
+        <div class="tasks-container"></div>
+        <button class="add-btn">+ Adicionar</button>
+        </div>
+        
+        <div class="column" id="doing">
+        <h5>Doing</h5>
+        <div class="tasks-container"></div>
+        <button class="add-btn">+ Adicionar</button>
+        </div>
+        
+        <div class="column" id="done">
+        <h5>Done</h5>
+        <div class="tasks-container"></div>
+        <button class="add-btn">+ Adicionar</button>
+        </div>
 
 </div>
 
 </div>
 
-<script src="script.js"></script>
+<script src="kanban.js"></script>
 
 </body>
 </html>
