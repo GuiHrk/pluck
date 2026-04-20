@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
-<link rel="stylesheet" href="login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pluck</title>
+    <link rel="stylesheet" href="login.css">
 </head>
 
 <body>
 
-<div class="login-container">
+<div class="container">
 
-    <h2>Login</h2>
+    <div class="card">
 
-    <form id="loginForm">
+        <!-- LADO ESQUERDO -->
+        <div class="left">
+            <img src="../register/img/logo2.png" class="logo">
 
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Senha" required>
-        <button type="submit">Entrar</button>
+            <h1>Bem-vindo de volta</h1>
+            <p>
+                Entre na sua conta e continue gerenciando tudo com facilidade.
+            </p>
+        </div>
 
-    </form>
+        <!-- LADO DIREITO -->
+        <div class="right">
+            <h2>Entrar</h2>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <input type="email" id="email" required>
+                    <label>Email</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" required>
+                    <label>Senha</label>
+                </div>
+
+                <button type="submit">Entrar</button>
+
+            </form>
+
+            <p class="link">
+                Não tem conta? <a href="../register/register.html">Cadastre-se</a>
+            </p>
+
+        </div>
+
+    </div>
 
 </div>
 
