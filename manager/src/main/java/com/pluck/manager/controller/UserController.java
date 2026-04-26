@@ -1,5 +1,6 @@
 package com.pluck.manager.controller;
 
+import com.pluck.manager.entity.Group;
 import com.pluck.manager.entity.User;
 import com.pluck.manager.service.UserService;
 
@@ -42,4 +43,10 @@ public class UserController {
         return userService.login(user.getEmail(), user.getPassword());
     }
 
+    @PutMapping("/{id}/group")
+    public User updateGroup(@PathVariable Long id, @RequestBody Group group){
+    return userService.updateGroup(id, group);
+    }
+
 }
+// Camada Ponto de entrada da aplicação, responsável por expor os endpoints HTTP (API REST).

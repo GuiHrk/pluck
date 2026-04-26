@@ -7,6 +7,6 @@ public class TestController {
 
     @GetMapping("/")
     public String home() {
-        return "API funcionando";
+        return "API funcionando// servidor está online. Acesse:  http://localhost:8080 - e selecione o caminho de interesse";
     }
 }

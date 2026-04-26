@@ -17,6 +17,11 @@ public class User {
     private String password;    
     private String role;
 
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
+
+
 public Long getId(){
     return id;
 }
@@ -52,4 +57,15 @@ public void setRole(String role){
     this.role = role;
 }
 
+public Group getGroup(){
+    return group;
 }
+
+public void setGroup(Group group){
+    this.group = group;
+
+}
+
+}
+
+// Cama que representa a tabela no banco de dados, mapeia os dados par objetos Java. 

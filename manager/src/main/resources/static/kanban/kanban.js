@@ -8,6 +8,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;    
     }
 
+    document.getElementById("btnCriarGrupo")
+    .addEventListener("click", criarGrupo);
+
+    document.getElementById("btnEntrarGrupo")
+    .addEventListener("click", entrarGrupo);
+
     try{
         const response = await fetch(`http://localhost:8080/tasks/user/${user.id}`);
         const tasks = await response.json();
@@ -35,7 +41,12 @@ function renderTasks(tasks) {
         const taskElement = document.createElement("div");
         taskElement.classList.add("task");
         taskElement.setAttribute("draggable", "true");
-        taskElement.innerText = task.title;
+        taskElement.innerHTML = `
+            <strong>${task.title}</strong><br>
+            <small>${task.description || "Sem descrição" }</small><br>
+            <span>👤 ${task.user?.name || "Sem Responsável"}</span>
+            <span>👥 ${task.group?.name || "Sem grupo"}</span>
+        `;
 
         const status = task.status?.toLowerCase();
 
@@ -93,3 +104,52 @@ document.querySelectorAll(".add-btn").forEach(btn =>{
     });
   });
 }
+async function criarGrupo() {
+   
+    const name = prompt("Nome do grupo:");
+    if(!name) return;
+
+    try{
+     const response = await fetch("http://localhost:8080/groups",{
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json"
+        },
+    body: JSON.stringify({ name: name })
+    });
+ 
+    if (!response.ok) throw new Error();
+    alert("Grupo criado!");
+    }catch {
+    alert("Erro ao criar grupo");
+    }
+    
+
+}
+
+async function entrarGrupo() {
+    const groupId = prompt("Id do grupo:");
+    if (!groupId) return;
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    try {
+        const response = await fetch(`http://localhost:8080/users/${user.id}/group`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: Number(groupId)
+            })
+        });
+
+        if (!response.ok) throw new Error();
+
+        alert("Entrou no grupo!");
+        location.reload();
+
+    } catch {
+        alert("Erro ao entrar no grupo");
+        }
+    }

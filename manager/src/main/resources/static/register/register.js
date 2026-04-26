@@ -25,6 +25,8 @@ form.addEventListener("submit", async (e) => {
       });
  
           alert("Usuário cadastrado com sucesso");
+
+          window.location = "/login/login.html";
       }
      catch (error) {
       console.error(error);

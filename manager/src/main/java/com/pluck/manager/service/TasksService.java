@@ -12,7 +12,6 @@ import java.util.List;
 
 @Service
 public class TasksService {
-
   
     @Autowired
     private UserRepository userRepository;
@@ -26,16 +25,16 @@ public class TasksService {
             throw new RuntimeException("User é obrigatório");
         }
     
-        if(tasks.getStatus() == null){
-            tasks.setStatus("PENDENTENTE");
-        }
-
         Long userId = tasks.getUser().getId();
     
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("User não encontrado"));
     
         tasks.setUser(user);
+
+        if(user.getGroup() != null){
+            tasks.setGroup(user.getGroup());
+        }
     
         return tasksRepository.save(tasks);
     }

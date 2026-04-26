@@ -11,4 +11,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 }
     
- 
+ // Cama responsável pela comunicação com o banco de dados, utilizando o Spring Data JPA para facilitar as operações CRUD.

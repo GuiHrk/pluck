@@ -19,6 +19,7 @@ public class GroupController {
         return groupService.create(group);
     }
 
+
     @GetMapping
     public List<Group> list(){
         return groupService.list();
