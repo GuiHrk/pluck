@@ -46,6 +46,8 @@ function renderTasks(tasks) {
             <small>${task.description || "Sem descrição" }</small><br>
             <span>👤 ${task.user?.name || "Sem Responsável"}</span>
             <span>👥 ${task.group?.name || "Sem grupo"}</span>
+            <Strong>${task.title}</strong><br>
+            <button onclick="deleteTask(${task.id})"> Excluir</button>
         `;
 
         const status = task.status?.toLowerCase();
@@ -153,3 +155,31 @@ async function entrarGrupo() {
         alert("Erro ao entrar no grupo");
         }
     }
+//Deletes
+
+//Deletar Tarefas
+    async function deleteTask(taskId) {
+        await fetch(`http://localhost:8080/tasks/${taskId}`, {
+            method: "DELETE"
+        });
+
+        alert("Tarefa excluida");
+        localtion.reload();
+    }
+
+// Deletar Usuário
+async function deleteUser(userId) {
+    await fetch(`http://localhost:8080/users/${userId}`, {
+        method: "DELETE"
+    });
+    alert("Usuário excluido");
+}
+// Deletar Grupo
+async function deleteGroup(groupId) {
+    await fetch(`http://localhost:8080/groups/${groupId}`, {
+        method: "DELETE"
+    });
+alert("Grupo Excluido");
+localtion.reload();
+
+}

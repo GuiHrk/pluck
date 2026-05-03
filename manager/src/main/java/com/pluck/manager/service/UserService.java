@@ -19,6 +19,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    
     public User create(User user) {
 
         if(user.getGroup() != null && user.getGroup().getId() != null){
@@ -42,7 +43,14 @@ public class UserService {
     }
 
     public void delete(Long id) {
-        userRepository.deleteById(id);
+      
+    User user = userRepository.findById(id)
+    .orElseThrow(() -> new RuntimeException("Usário não encontrado"));
+
+        // remove relação com grupo
+        user.setGroup(null);
+
+        userRepository.delete(user);
     }
 
     public User login(String email, String password){
