@@ -46,7 +46,6 @@ function renderTasks(tasks) {
             <small>${task.description || "Sem descrição" }</small><br>
             <span>👤 ${task.user?.name || "Sem Responsável"}</span>
             <span>👥 ${task.group?.name || "Sem grupo"}</span>
-            <Strong>${task.title}</strong><br>
             <button onclick="deleteTask(${task.id})"> Excluir</button>
         `;
 
