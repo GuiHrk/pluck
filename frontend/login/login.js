@@ -32,7 +32,7 @@ if(form){
         alert("Login realizado com sucesso!");
         console.log("Usuário:", data);
 
-        window.location.href = "/kanban/kanban.html";
+        window.location.href = "https://pluck-qebe.onrender.com/kanban/kanban.html";
 
       } else {
         alert("Email ou senha inválidos!");

@@ -11,7 +11,7 @@ form.addEventListener("submit", async (e) => {
   console.log(name, email, password);
 
   try{
-      const response = await fetch("http://localhost:8080/users", {
+      const response = await fetch("https://pluck-qebe.onrender.com/users", {
       method: "POST",
       headers:{
           "Content-Type": "application/json"
@@ -26,7 +26,7 @@ form.addEventListener("submit", async (e) => {
  
           alert("Usuário cadastrado com sucesso");
 
-          window.location = "/login/login.html";
+          window.location = "https://pluck-qebe.onrender.com/login/login.html";
       }
      catch (error) {
       console.error(error);

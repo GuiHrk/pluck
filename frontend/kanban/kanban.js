@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if(!user) {
         alert("Usuário não encontrado");
-        window.location.href = "/login/login.html";
+        window.location.href = "https://pluck-qebe.onrender.com/login/login.html";
         return;    
     }
 
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     .addEventListener("click", entrarGrupo);
 
     try{
-        const response = await fetch(`http://localhost:8080/tasks/user/${user.id}`);
+        const response = await fetch(`https://pluck-qebe.onrender.com/tasks/user/${user.id}`);
         const tasks = await response.json();
 
         renderTasks(tasks);
@@ -77,7 +77,7 @@ document.querySelectorAll(".add-btn").forEach(btn =>{
         const status = prompt("Status (Pendente, Em Progresso, Concluida):" || "Pendente");
 
       try{ 
-        const response = await fetch("http://localhost:8080/tasks", {
+        const response = await fetch("https://pluck-qebe.onrender.com/tasks", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -111,7 +111,7 @@ async function criarGrupo() {
     if(!name) return;
 
     try{
-     const response = await fetch("http://localhost:8080/groups",{
+     const response = await fetch("https://pluck-qebe.onrender.com/groups",{
         method: "POST",
         headers:{
             "Content-Type": "application/json"
@@ -135,7 +135,7 @@ async function entrarGrupo() {
     const user = JSON.parse(localStorage.getItem("user"));
 
     try {
-        const response = await fetch(`http://localhost:8080/users/${user.id}/group`, {
+        const response = await fetch(`https://pluck-qebe.onrender.com/users/${user.id}/group`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -158,7 +158,7 @@ async function entrarGrupo() {
 
 //Deletar Tarefas
     async function deleteTask(taskId) {
-        await fetch(`http://localhost:8080/tasks/${taskId}`, {
+        await fetch(`https://pluck-qebe.onrender.com/tasks/${taskId}`, {
             method: "DELETE"
         });
 
@@ -168,14 +168,14 @@ async function entrarGrupo() {
 
 // Deletar Usuário
 async function deleteUser(userId) {
-    await fetch(`http://localhost:8080/users/${userId}`, {
+    await fetch(`https://pluck-qebe.onrender.com/users/${userId}`, {
         method: "DELETE"
     });
     alert("Usuário excluido");
 }
 // Deletar Grupo
 async function deleteGroup(groupId) {
-    await fetch(`http://localhost:8080/groups/${groupId}`, {
+    await fetch(`https://pluck-qebe.onrender.com/groups/${groupId}`, {
         method: "DELETE"
     });
 alert("Grupo Excluido");
