@@ -18,7 +18,7 @@ public class CorsConfig {
 
                 registry.addMapping("/**")
                         .allowedOrigins(
-                         //   "https://"
+                         "https://pluck-woad.vercel.app"
                         )
                         .allowedMethods("*");
             }
