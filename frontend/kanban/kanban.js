@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if(!user) {
         alert("Usuário não encontrado");
-        window.location.href = "https://pluck-qebe.onrender.com/login/login.html";
+        window.location.href = "https://pluck-woad.vercel.app/login/login.html";
         return;    
     }
 
