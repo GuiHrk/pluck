@@ -26,7 +26,7 @@ form.addEventListener("submit", async (e) => {
  
           alert("Usuário cadastrado com sucesso");
 
-          window.location = "https://pluck-qebe.onrender.com/login/login.html";
+          window.location = "https://pluck-woad.vercel.app/login/login.html";
       }
      catch (error) {
       console.error(error);
