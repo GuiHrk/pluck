@@ -98,3 +98,39 @@ body{
 
     font-weight: bold;
 }
+.kanban-wrapper{
+    flex: 1;
+}
+
+.footer{
+    margin-top: auto;
+
+    background: #0d6efd;
+
+    color: white;
+
+    padding: 20px;
+
+    border-radius: 12px 12px 0 0;
+}
+
+.footer a{
+    color: white;
+    text-decoration: none;
+}
+
+.member-card{
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: #f1f1f1;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    margin-bottom: 10px;
+}

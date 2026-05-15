@@ -80,8 +80,136 @@
         </footer>
   </main>
 
-<!-- Display do usuário -->
+<!-- OFFCANVAS USUÁRIO -->
 
+<div class="offcanvas offcanvas-end"
+     tabindex="-1"
+     id="userPanel">
+
+    <div class="offcanvas-header">
+
+        <h5>Meu Perfil</h5>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas">
+        </button>
+
+    </div>
+
+    <div class="offcanvas-body">
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Nome
+            </label>
+
+            <input type="text"
+                   class="form-control"
+                   id="userName"
+                   disabled>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Email
+            </label>
+
+            <input type="email"
+                   class="form-control"
+                   id="userEmail"
+                   disabled>
+
+        </div>
+
+        <button class="btn btn-danger w-100">
+
+            Excluir Conta
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- OFFCANVAS GRUPO -->
+
+<div class="offcanvas offcanvas-end"
+     tabindex="-1"
+     id="groupPanel">
+
+    <div class="offcanvas-header">
+
+        <h5>Grupo</h5>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas">
+        </button>
+
+    </div>
+
+    <div class="offcanvas-body">
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Nome do Grupo
+            </label>
+
+            <input type="text"
+                   class="form-control"
+                   id="groupName"
+                   disabled>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Descrição
+            </label>
+
+            <textarea class="form-control"
+                      id="groupDescription"
+                      disabled>
+            </textarea>
+
+        </div>
+
+        <div class="mb-4">
+
+            <label class="form-label">
+                ID do Grupo
+            </label>
+
+            <input type="text"
+                   class="form-control"
+                   id="groupId"
+                   disabled>
+
+        </div>
+
+        <hr>
+
+        <h6>Membros</h6>
+
+        <div id="membersList">
+
+        </div>
+
+        <button class="btn btn-danger w-100 mt-4">
+
+            Excluir Grupo
+
+        </button>
+
+    </div>
+
+</div>
 
 
 <script src="kanban.js"></script>
