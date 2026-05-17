@@ -4,6 +4,7 @@ import com.pluck.manager.entity.Group;
 import com.pluck.manager.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -23,6 +24,18 @@ public class GroupController {
     @GetMapping
     public List<Group> list(){
         return groupService.list();
+    }
+
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Group> getGroupByUser(@PathVariable Long userId){
+
+
+        Group group = groupService.getGroupByUserId(userId);
+        if (group != null) {
+            return ResponseEntity.notFound().build();
+        } 
+        return ResponseEntity.ok(group);
     }
 
 }

@@ -27,6 +27,11 @@ public class GroupService {
         return groupRepository.findAll();
     }
 
+    public Group getGroupByUserId(Long userId) {
+        return groupRepository.findByUserId(userId);
+    }
+
+
     @Transactional
     public void delete(Long id) {
      

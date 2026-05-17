@@ -1,36 +1,51 @@
 package com.pluck.manager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "groups")
 public class Group {
     
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-private String name;
-private String description;
+    private String name;
+    private String description;
 
-public Long getId(){
-    return id;
-}
+    @OneToMany(mappedBy = "group")
+    @JsonIgnore
+    private List<User> users;
 
-public String getName(){
-    return name;
-}
+    public Long getId(){
+        return id;
+    }
 
-public void setName(String name){
-    this.name = name;
-}
+    public String getName(){
+        return name;
+    }
 
-public String getDescription(){
-    return description;
-}
+    public void setName(String name){
+        this.name = name;
+    }
 
-public void setDescription(String description){
-    this.description = description;
-}
+    public String getDescription(){
+        return description;
+    }
 
-}
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public List<User> getUsers(){
+        return users;
+    }
+
+    public void setUsers(List<User> users){
+        this.users = users;
+    }
+
+    }
