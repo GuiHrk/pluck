@@ -208,7 +208,7 @@ console.log(user)
 if (!user) return;
 
 try{
-    const response = await fetch(`https://pluck-qebe.onrender.com/groups/${user.group?.id}`);
+    const response = await fetch(`https://pluck-qebe.onrender.com/groups/user/${user.id}`);
 
     if (!response.ok) return;
 
