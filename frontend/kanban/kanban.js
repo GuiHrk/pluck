@@ -24,6 +24,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error){
         console.error("Erro ao carregar Tarefas:", error);
     }
+
+    loadUserData();
+    loadGroupData();
+
 });
 
 function renderTasks(tasks) {
@@ -189,9 +193,9 @@ const user = JSON.parse(localStorage.getItem("user"));
 
 if (!user) return;
 
-document.querySelector("#userName").textContent = user.name || "Usuário sem nome";
+document.querySelector("#userName").value = user.name || "Usuário sem nome";
 
-document.querySelector("#userEmail").textContent = user.email || "Usuário sem email";
+document.querySelector("#userEmail").value = user.email || "Usuário sem email";
 
 
 }
@@ -199,6 +203,7 @@ document.querySelector("#userEmail").textContent = user.email || "Usuário sem e
 async function loadGroupData () {
     
 const user = JSON.parse(localStorage.getItem("user")); 
+console.log(user)
 
 if (!user) return;
 
@@ -209,7 +214,7 @@ try{
 
     const group = await response.json();
 
-    document.querySelector("#groupName").textContent = group.name || "Sem grupo";
+    document.querySelector("#groupName").value = group.name || "Sem grupo";
 
     document.querySelector("#groupDescription").value = group.description || "Sem descrição";
 
