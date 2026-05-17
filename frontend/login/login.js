@@ -32,6 +32,8 @@ if(form){
         alert("Login realizado com sucesso!");
         console.log("Usuário:", data);
 
+
+        
         window.location.href = "https://pluck-woad.vercel.app/kanban/kanban.html";
 
       } else {

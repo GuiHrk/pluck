@@ -182,3 +182,42 @@ alert("Grupo Excluido");
 localtion.reload();
 
 }
+
+function loadUserData(){ 
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user) return;
+
+document.querySelector("#userName").textContent = user.name || "Usuário sem nome";
+
+document.querySelector("#userEmail").textContent = user.email || "Usuário sem email";
+
+
+}
+
+async function loadGroupData () {
+    
+const user = JSON.parse(localStorage.getItem("user")); 
+
+if (!user) return;
+
+try{
+    const response = await fetch(`https://pluck-qebe.onrender.com/groups/${user.group?.id}`);
+
+    if (!response.ok) return;
+
+    const group = await response.json();
+
+    document.querySelector("#groupName").textContent = group.name || "Sem grupo";
+
+    document.querySelector("#groupDescription").value = group.description || "Sem descrição";
+
+    document.querySelector("#groupId").value = group.id || "";
+
+} catch (error){
+    console.error("Erro ao carregar dados do grupo:", error);
+}
+
+    
+}
