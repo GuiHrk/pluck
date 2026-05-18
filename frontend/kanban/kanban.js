@@ -211,10 +211,10 @@ console.log(user)
 if (!user || !user.group) return;
 
 
-    document.querySelector("#groupName").value = group.name || "Sem grupo";
+    document.querySelector("#groupName").value = user.group.name || "Sem grupo";
 
-    document.querySelector("#groupDescription").value = group.description || "Sem descrição";
+    document.querySelector("#groupDescription").value = user.group.description || "Sem descrição";
 
-    document.querySelector("#groupId").value = group.id || "";
+    document.querySelector("#groupId").value = user.group.id || "";
 
 } 
