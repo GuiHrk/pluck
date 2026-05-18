@@ -32,7 +32,7 @@ public class GroupController {
 
 
         Group group = groupService.getGroupByUserId(userId);
-        if (group != null) {
+        if (group == null) {
             return ResponseEntity.notFound().build();
         } 
         return ResponseEntity.ok(group);

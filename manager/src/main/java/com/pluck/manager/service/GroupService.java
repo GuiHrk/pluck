@@ -28,7 +28,7 @@ public class GroupService {
     }
 
     public Group getGroupByUserId(Long userId) {
-        return groupRepository.findByUserId(userId);
+        return groupRepository.findByUser_Id(userId);
     }
 
 

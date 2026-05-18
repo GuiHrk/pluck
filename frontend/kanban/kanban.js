@@ -151,6 +151,9 @@ async function entrarGrupo() {
 
         if (!response.ok) throw new Error();
 
+        const updateUser = await response.json();
+
+        localStorage.setItem("user", JSON.stringify(updateUser));
         alert("Entrou no grupo!");
         location.reload();
 
@@ -167,7 +170,7 @@ async function entrarGrupo() {
         });
 
         alert("Tarefa excluida");
-        localtion.reload();
+        location.reload();
     }
 
 // Deletar Usuário
@@ -183,7 +186,7 @@ async function deleteGroup(groupId) {
         method: "DELETE"
     });
 alert("Grupo Excluido");
-localtion.reload();
+location.reload();
 
 }
 
