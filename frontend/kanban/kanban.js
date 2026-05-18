@@ -208,14 +208,8 @@ async function loadGroupData () {
 const user = JSON.parse(localStorage.getItem("user")); 
 console.log(user)
 
-if (!user) return;
+if (!user || !user.group) return;
 
-try{
-    const response = await fetch(`https://pluck-qebe.onrender.com/groups/user/${user.id}`);
-
-    if (!response.ok) return;
-
-    const group = await response.json();
 
     document.querySelector("#groupName").value = group.name || "Sem grupo";
 
