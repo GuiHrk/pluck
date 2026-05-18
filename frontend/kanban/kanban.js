@@ -217,9 +217,4 @@ if (!user || !user.group) return;
 
     document.querySelector("#groupId").value = group.id || "";
 
-} catch (error){
-    console.error("Erro ao carregar dados do grupo:", error);
-}
-
-    
-}
+} 
