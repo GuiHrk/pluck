@@ -12,7 +12,7 @@ public class User {
 
     private String name;
 
-    @Column(nullable = false)
+    @Column(unique = true,nullable = false)
     private String email;
     private String password;    
     private String role;

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long>{
     
-Group findByUser_Id(Long userId);
+Group findByUsers_Id(Long userId);
 
 }
