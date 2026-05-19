@@ -48,4 +48,9 @@ public class TasksController {
         return tasksService.getByGroup(groupId);
     }
 
+    @PutMapping("/{id}/status")
+    public Task updateStatus(@PathVariable Long id, @RequestBody Map<String, String> body){
+
+        return taskService.updateStatus(id, body.get("status"));
+    }
 }

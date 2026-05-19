@@ -44,6 +44,7 @@ function renderTasks(tasks) {
        
         const taskElement = document.createElement("div");
         taskElement.classList.add("task");
+        taskElement.dataset.id = task.id;
         taskElement.setAttribute("draggable", "true");
         taskElement.innerHTML = `
             <strong>${task.title}</strong><br>
@@ -53,20 +54,76 @@ function renderTasks(tasks) {
             <button onclick="deleteTask(${task.id})"> Excluir</button>
         `;
 
-        const status = task.status?.toLowerCase();
+        const status = task.status?.trim().toLowerCase();
 
-        if(task.status === "Pendente"){
+        if(status === "pendente"){
             todo.appendChild(taskElement);
         }
-        else if(task.status === "Em Progresso"){
+        else if(status === "em Progresso"){
             doing.appendChild(taskElement);
         }
-        else if(task.status === "Concluida"){
+        else if(status === "concluida"){
             done.appendChild(taskElement);
         }
 
+        taskElement.addEventListener("dragstart", () => {
+    taskElement.classList.add("dragging");
+});
+
+taskElement.addEventListener("dragend", () => {
+    taskElement.classList.remove("dragging");
+});
+
     });
 }
+
+document.querySelectorAll(".tasks-container").forEach(container => {
+
+    container.addEventListener("dragover", async e => {
+
+        e.preventDefault();
+
+        const dragging = document.querySelector(".dragging");
+
+        if (!dragging) return;
+
+        container.appendChild(dragging);
+
+        const taskId = dragging.dataset.id;
+
+        const columnId = container.parentElement.id;
+
+        let newStatus = "Pendente";
+
+        if (columnId === "doing") {
+            newStatus = "Em Progresso";
+        }
+
+        else if (columnId === "done") {
+            newStatus = "Concluida";
+        }
+
+        try {
+
+            await fetch(`https://pluck-qebe.onrender.com/tasks/${taskId}/status`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    status: newStatus
+                })
+            });
+
+        } catch (error) {
+            console.error("Erro ao atualizar status:", error);
+        }
+
+    });
+
+});
+
+
 
 function setupAddButtons(user){
 document.querySelectorAll(".add-btn").forEach(btn =>{
@@ -78,7 +135,7 @@ document.querySelectorAll(".add-btn").forEach(btn =>{
 
         const description = prompt("Descrição da tarefa:");
 
-        const status = prompt("Status (Pendente, Em Progresso, Concluida):" || "Pendente");
+        const status = prompt("Status (pendente, em progresso, concluida):") || "Pendente";
 
       try{ 
         const response = await fetch("https://pluck-qebe.onrender.com/tasks", {
@@ -100,7 +157,8 @@ document.querySelectorAll(".add-btn").forEach(btn =>{
 
    const newTask = await response.json();
 
-   renderTasks([newTask]);
+    location.reload();
+  // renderTasks([newTask]);
 
     } catch (error) {
         console.error("Erro ao criar tarefa:", error);
