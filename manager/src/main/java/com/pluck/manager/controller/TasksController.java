@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/tasks")
@@ -49,8 +50,9 @@ public class TasksController {
     }
 
     @PutMapping("/{id}/status")
-    public Task updateStatus(@PathVariable Long id, @RequestBody Map<String, String> body){
+    public Tasks updateStatus(@PathVariable Long id,
+                              @RequestBody Map<String, String> body){
 
-        return taskService.updateStatus(id, body.get("status"));
+        return tasksService.updateStatus(id, body.get("status"));
     }
 }

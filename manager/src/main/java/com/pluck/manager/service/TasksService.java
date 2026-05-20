@@ -70,15 +70,15 @@ public class TasksService {
     public List<Tasks> getByGroup(Long groupId){
         return tasksRepository.findByGroup_Id(groupId);
     }
-    
-    public Task updateStatus(Long id, String status){
 
-        Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task não encontrada"));
-    
-        task.setStatus(status);
-    
-        return taskRepository.save(task);
-    }
+        public Tasks updateStatus(Long id, String status){
+
+            Tasks task = tasksRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Task não encontrada"));
+
+            task.setStatus(status);
+
+            return tasksRepository.save(task);
+        }
 
 }
