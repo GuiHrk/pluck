@@ -79,7 +79,11 @@ taskElement.addEventListener("dragend", () => {
 
 document.querySelectorAll(".tasks-container").forEach(container => {
 
-    container.addEventListener("dragover", async e => {
+    container.addEventListener("dragover", e => {
+        e.preventDefault();
+    });
+
+    container.addEventListener("drop", async e => {
 
         e.preventDefault();
 
@@ -115,7 +119,7 @@ document.querySelectorAll(".tasks-container").forEach(container => {
                 })
             });
 
-        } catch (error) {
+        } catch(error){
             console.error("Erro ao atualizar status:", error);
         }
 
