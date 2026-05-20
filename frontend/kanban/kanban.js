@@ -59,7 +59,7 @@ function renderTasks(tasks) {
         if(status === "pendente"){
             todo.appendChild(taskElement);
         }
-        else if(status === "em Progresso"){
+        else if(status === "em progresso"){
             doing.appendChild(taskElement);
         }
         else if(status === "concluida"){
