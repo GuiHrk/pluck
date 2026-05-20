@@ -4,6 +4,7 @@ import com.pluck.manager.entity.Tasks;
 import com.pluck.manager.service.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class TasksController {
     }
 
     @PutMapping("/{id}/status")
-    public Task updateStatus(@PathVariable Long id, @RequestBody Map<String, String> body){
+    public Tasks updateStatus(@PathVariable Long id, @RequestBody Map<String, String> body){
 
-        return taskService.updateStatus(id, body.get("status"));
+        return tasksService.updateStatus(id, body.get("status"));
     }
 }

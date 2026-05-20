@@ -71,14 +71,14 @@ public class TasksService {
         return tasksRepository.findByGroup_Id(groupId);
     }
     
-    public Task updateStatus(Long id, String status){
+    public Tasks updateStatus(Long id, String status){
 
-        Task task = taskRepository.findById(id)
+        Tasks task = tasksRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task não encontrada"));
     
         task.setStatus(status);
     
-        return taskRepository.save(task);
+        return tasksRepository.save(task);
     }
 
 }
