@@ -129,73 +129,120 @@ document.querySelectorAll(".tasks-container").forEach(container => {
 
 
 
-function setupAddButtons(user){
-document.querySelectorAll(".add-btn").forEach(btn =>{
-    btn.addEventListener("click", async () => {
-        
-        const title = prompt("Nome da tarefa:");
-   
+function setupAddButtons(user) {
+    // Instancia o modal do Bootstrap para podermos controlar via JS
+    const modalElement = document.getElementById('modalCriarTarefa');
+    const bsModal = new bootstrap.Modal(modalElement);
+
+    document.querySelectorAll(".column").forEach(column => {
+        const addBtn = column.querySelector(".add-btn");
+        if (!addBtn) return;
+
+        addBtn.addEventListener("click", () => {
+            // Limpa o formulário antes de abrir
+            document.getElementById("formCriarTarefa").reset();
+
+            // Descobre o status baseado no ID da coluna onde o botão foi clicado
+            const columnId = column.id; // 'todo', 'doing' ou 'done'
+            let statusMapeado = "Pendente";
+
+            if (columnId === "doing") statusMapeado = "Em Progresso";
+            if (columnId === "done") statusMapeado = "Concluida";
+
+            // Salva o status no input oculto do modal
+            document.getElementById("taskStatusHidden").value = statusMapeado;
+
+            // Abre o modal de forma elegante na tela
+            bsModal.show();
+        });
+    });
+
+    // Escuta o envio do formulário do modal
+    const form = document.getElementById("formCriarTarefa");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Evita que a página recarregue do nada
+
+        const title = document.getElementById("taskTitle").value;
+        const description = document.getElementById("taskDesc").value;
+        const status = document.getElementById("taskStatusHidden").value;
+
         if (!title) return;
 
-        const description = prompt("Descrição da tarefa:");
+        try {
+            const response = await fetch("https://pluck-qebe.onrender.com/tasks", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title: title,
+                    description: description,
+                    status: status,
+                    user: { id: user.id }
+                })
+            });
 
-        const status = prompt("Status (pendente, em progresso, concluida):") || "Pendente";
+            if (!response.ok) {
+                throw new Error("Erro ao criar tarefa");
+            }
 
-      try{ 
-        const response = await fetch("https://pluck-qebe.onrender.com/tasks", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            title: title,
-            description: description,
-            status: status,
-            user: { id: user.id}
-        })
-    });
- 
-    if(!response.ok){
-        throw new Error("Erro ao criar tarefa");
-    }
+            // Esconde o modal e atualiza a tela
+            bsModal.hide();
+            location.reload();
 
-   const newTask = await response.json();
-
-    location.reload();
-  // renderTasks([newTask]);
-
-    } catch (error) {
-        console.error("Erro ao criar tarefa:", error);
-        alert("Erro ao criar tarefa");
-      }
-    });
-  });
+        } catch (error) {
+            console.error("Erro ao criar tarefa:", error);
+            alert("Erro ao criar tarefa");
+        }
+    }, { once: true }); // O { once: true } evita que o evento se duplique ao clicar várias vezes
 }
+
+const bsModalCriarGrupo = new bootstrap.Modal(document.getElementById('modalCriarGrupo'));
+const bsModalEntrarGrupo = new bootstrap.Modal(document.getElementById('modalEntrarGrupo'));
+
 async function criarGrupo() {
-   
-    const name = prompt("Nome do grupo:");
+    // Em vez do prompt, limpamos o form e abrimos o modal
+    document.getElementById("formCriarGrupo").reset();
+    bsModalCriarGrupo.show();
+}
+
+// Configura o evento do formulário de criar grupo
+document.getElementById("formCriarGrupo").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("groupNameInput").value;
     if(!name) return;
 
-    try{
-     const response = await fetch("https://pluck-qebe.onrender.com/groups",{
-        method: "POST",
-        headers:{
-            "Content-Type": "application/json"
-        },
-    body: JSON.stringify({ name: name })
-    });
- 
-    if (!response.ok) throw new Error();
-    alert("Grupo criado!");
-    }catch {
-    alert("Erro ao criar grupo");
-    }
-    
+    try {
+        const response = await fetch("https://pluck-qebe.onrender.com/groups", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name: name })
+        });
 
-}
+        if (!response.ok) throw new Error();
+
+        bsModalCriarGrupo.hide();
+        alert("Grupo criado com sucesso!"); // Opcional: Depois dá para trocar por um toast ou modal de sucesso discreto
+        location.reload();
+    } catch (error) {
+        alert("Erro ao criar grupo");
+    }
+});
 
 async function entrarGrupo() {
-    const groupId = prompt("Id do grupo:");
+    // Em vez do prompt, limpamos o form e abrimos o modal
+    document.getElementById("formEntrarGrupo").reset();
+    bsModalEntrarGrupo.show();
+}
+
+// Configura o evento do formulário de entrar em um grupo
+document.getElementById("formEntrarGrupo").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const groupId = document.getElementById("groupIdInput").value;
     if (!groupId) return;
 
     const user = JSON.parse(localStorage.getItem("user"));
@@ -216,13 +263,15 @@ async function entrarGrupo() {
         const updateUser = await response.json();
 
         localStorage.setItem("user", JSON.stringify(updateUser));
-        alert("Entrou no grupo!");
+
+        bsModalEntrarGrupo.hide();
+        alert("Entrou no grupo com sucesso!");
         location.reload();
 
-    } catch {
+    } catch (error) {
         alert("Erro ao entrar no grupo");
-        }
     }
+});
 //Deletes
 
 //Deletar Tarefas
