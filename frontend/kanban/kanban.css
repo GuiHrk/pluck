@@ -1,8 +1,10 @@
-
+/* ==========================================
+   RESET & CONFIGURAÇÕES GERAIS
+   ========================================== */
 body {
-    background: linear-gradient(135deg, #4f73ca 0%, #3553a1 100%); /* Fundo azul moderno em degradê */
+    background: linear-gradient(135deg, #4f73ca 0%, #3553a1 100%);
     margin: 0;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Fonte mais moderna e limpa */
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     min-height: 100vh;
 }
 
@@ -72,12 +74,12 @@ body {
 }
 
 .topbar h2 {
-    color: white; ul
+    color: white;
     font-weight: 700;
 }
 
 /* ==========================================
-   BOARD & COLUNAS (ESTILO IGUAL À IMAGEM)
+   BOARD & COLUNAS (ESTILO GLASSMORPHISM)
    ========================================== */
 .kanban-wrapper {
     flex: 1;
@@ -90,8 +92,6 @@ body {
     overflow-x: auto;
     padding: 25px;
     align-items: flex-start;
-
-
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -113,7 +113,7 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
-/* ESTILIZAÇÃO DOS TÍTULOS (BADGES DE STATUS) */
+/* ESTILIZAÇÃO DOS TÍTULOS */
 .column h5 {
     display: inline-flex;
     align-self: flex-start;
@@ -124,21 +124,9 @@ body {
     margin: 0;
 }
 
-/* Cores específicas para cada badge baseado no ID da coluna */
-#todo h5 {
-    background-color: #e0eaffe;
-    color: #2563eb;
-}
-
-#doing h5 {
-    background-color: #fef3c7;
-    color: #d97706;
-}
-
-#done h5 {
-    background-color: #dcfce7;
-    color: #15803d;
-}
+#todo h5 { background-color: #e0eaffe; color: #2563eb; }
+#doing h5 { background-color: #fef3c7; color: #d97706; }
+#done h5 { background-color: #dcfce7; color: #15803d; }
 
 /* CONTAINER DAS TAREFAS */
 .tasks-container {
@@ -162,6 +150,11 @@ body {
     color: #1e293b;
     border-left: 5px solid transparent;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    /* Configurações essenciais para o botão interno funcionar */
+    position: relative;
+    padding-top: 18px;
+    padding-right: 35px;
 }
 
 .task:hover {
@@ -169,22 +162,30 @@ body {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
-
-    border-left-color: #2563eb;
-}
-
-#doing .task {
-    border-left-color: #ffb020;
-}
-
-#done .task {
-    border-left-color: #10b981;
-}
+/* Cores das bordas laterais dos cards baseado na coluna */
+#todo .task { border-left-color: #2563eb; }
+#doing .task { border-left-color: #ffb020; }
+#done .task { border-left-color: #10b981; }
 
 /* Estado de Dragging */
 .task.dragging {
     opacity: 0.4;
     transform: scale(0.98) rotate(1deg);
+}
+
+/* Textos internos do card */
+.task strong {
+    font-size: 15px;
+    color: #1e293b;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+.task small, .task span {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 2px;
 }
 
 /* BOTÃO DE ADICIONAR TAREFA */
@@ -203,75 +204,16 @@ body {
     transition: color 0.2s;
 }
 
-.add-btn:hover {
-    color: #3b82f6;
-}
+.add-btn:hover { color: #3b82f6; }
 
 /* ==========================================
-   FOOTER & COMPONENTES EXTRAS
+   MÁGICA DO BOTÃO DE EXCLUIR
    ========================================== */
-.footer {
-    margin-top: auto;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.7);
-    padding: 20px 0 0 0;
-    font-size: 14px;
-}
-
-.footer a {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.footer a:hover {
-    color: white;
-}
-
-.member-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f1f5f9;
-    padding: 12px;
-    border-radius: 12px;
-    margin-bottom: 10px;
-}
-
-/* ==========================================
-   AJUSTES NOS CARDS E BOTÃO DE EXCLUIR
-   ========================================== */
-
-
-.task {
-    position: relative;
-    padding-top: 18px;
-    padding-right: 35px;
-
-
-.task strong {
-    font-size: 15px;
-    color: #1e293b;
-    display: inline-block;
-    margin-bottom: 4px;
-}
-
-
-.task small, .task span {
-    display: block;
-    font-size: 12px;
-    color: #64748b;
-    margin-top: 2px;
-}
-
-/
 .task button {
     position: absolute;
     top: 12px;
     right: 12px;
-
-    /
-    font-size: 0;
+    font-size: 0; /* Esconde a palavra "Excluir" antiga */
     background: transparent;
     border: none;
     cursor: pointer;
@@ -284,7 +226,7 @@ body {
     transition: all 0.2s ease;
 }
 
-
+/* Injeta o visual limpo do "X" */
 .task button::before {
     content: "✕";
     font-size: 14px;
@@ -292,11 +234,35 @@ body {
     color: #94a3b8;
 }
 
-
+/* Efeito Hover do botão */
 .task button:hover {
     background-color: #fee2e2;
 }
 
 .task button:hover::before {
     color: #ef4444;
+}
+
+/* COMPONENTES EXTRAS */
+.footer {
+    margin-top: auto;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 20px 0 0 0;
+    font-size: 14px;
+}
+
+.footer a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+}
+
+.member-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f5f9;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
 }
