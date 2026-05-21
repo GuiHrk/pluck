@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const user = JSON.parse(localStorage.getItem("user"));
 
     if(!user) {
-        alert("Usuário não encontrado");
         window.location.href = "https://pluck-woad.vercel.app/login/login.html";
         return;
     }
@@ -31,6 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     } catch (error){
         console.error("Erro ao carregar Tarefas:", error);
+        mostrarToast("Erro ao carregar as tarefas do servidor.", "danger");
     }
 
     loadUserData();
@@ -75,12 +75,12 @@ function renderTasks(tasks) {
         }
 
         taskElement.addEventListener("dragstart", () => {
-    taskElement.classList.add("dragging");
-});
+            taskElement.classList.add("dragging");
+        });
 
-taskElement.addEventListener("dragend", () => {
-    taskElement.classList.remove("dragging");
-});
+        taskElement.addEventListener("dragend", () => {
+            taskElement.classList.remove("dragging");
+        });
 
     });
 }
@@ -102,7 +102,6 @@ document.querySelectorAll(".tasks-container").forEach(container => {
         container.appendChild(dragging);
 
         const taskId = dragging.dataset.id;
-
         const columnId = container.parentElement.id;
 
         let newStatus = "Pendente";
@@ -110,13 +109,11 @@ document.querySelectorAll(".tasks-container").forEach(container => {
         if (columnId === "doing") {
             newStatus = "Em Progresso";
         }
-
         else if (columnId === "done") {
             newStatus = "Concluida";
         }
 
         try {
-
             await fetch(`https://pluck-qebe.onrender.com/tasks/${taskId}/status`, {
                 method: "PUT",
                 headers: {
@@ -126,19 +123,17 @@ document.querySelectorAll(".tasks-container").forEach(container => {
                     status: newStatus
                 })
             });
-
+            mostrarToast("Status da tarefa atualizado!", "success");
         } catch(error){
             console.error("Erro ao atualizar status:", error);
+            mostrarToast("Erro ao salvar o novo status da tarefa.", "danger");
         }
 
     });
 
 });
 
-
-
 function setupAddButtons(user) {
-    // Instancia o modal do Bootstrap para podermos controlar via JS
     const modalElement = document.getElementById('modalCriarTarefa');
     const bsModal = new bootstrap.Modal(modalElement);
 
@@ -147,28 +142,22 @@ function setupAddButtons(user) {
         if (!addBtn) return;
 
         addBtn.addEventListener("click", () => {
-            // Limpa o formulário antes de abrir
             document.getElementById("formCriarTarefa").reset();
 
-            // Descobre o status baseado no ID da coluna onde o botão foi clicado
-            const columnId = column.id; // 'todo', 'doing' ou 'done'
+            const columnId = column.id;
             let statusMapeado = "Pendente";
 
             if (columnId === "doing") statusMapeado = "Em Progresso";
             if (columnId === "done") statusMapeado = "Concluida";
 
-            // Salva o status no input oculto do modal
             document.getElementById("taskStatusHidden").value = statusMapeado;
-
-            // Abre o modal de forma elegante na tela
             bsModal.show();
         });
     });
 
-    // Escuta o envio do formulário do modal
     const form = document.getElementById("formCriarTarefa");
     form.addEventListener("submit", async (e) => {
-        e.preventDefault(); // Evita que a página recarregue do nada
+        e.preventDefault();
 
         const title = document.getElementById("taskTitle").value;
         const description = document.getElementById("taskDesc").value;
@@ -194,24 +183,25 @@ function setupAddButtons(user) {
                 throw new Error("Erro ao criar tarefa");
             }
 
-            // Esconde o modal e atualiza a tela
             bsModal.hide();
-            location.reload();
+            mostrarToast("Tarefa criada com sucesso!", "success");
+
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
 
         } catch (error) {
             console.error("Erro ao criar tarefa:", error);
-            alert("Erro ao criar tarefa");
+            mostrarToast("Erro ao criar a tarefa.", "danger");
         }
-    }, { once: true }); // O { once: true } evita que o evento se duplique ao clicar várias vezes
+    }, { once: true });
 }
 
 async function criarGrupo() {
-    // Agora a instância global bsModalCriarGrupo estará definida
     document.getElementById("formCriarGrupo").reset();
     bsModalCriarGrupo.show();
 }
 
-// Configura o evento do formulário de criar grupo
 document.getElementById("formCriarGrupo").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -230,20 +220,21 @@ document.getElementById("formCriarGrupo").addEventListener("submit", async (e) =
         if (!response.ok) throw new Error();
 
         bsModalCriarGrupo.hide();
-        alert("Grupo criado com sucesso!");
-        location.reload();
+        mostrarToast("Grupo criado com sucesso!", "success");
+
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
     } catch (error) {
-        alert("Erro ao criar grupo");
+        mostrarToast("Erro ao criar grupo.", "danger");
     }
 });
 
 async function entrarGrupo() {
-    // Agora a instância global bsModalEntrarGrupo estará definida
     document.getElementById("formEntrarGrupo").reset();
     bsModalEntrarGrupo.show();
 }
 
-// Configura o evento do formulário de entrar em um grupo
 document.getElementById("formEntrarGrupo").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -266,44 +257,60 @@ document.getElementById("formEntrarGrupo").addEventListener("submit", async (e) 
         if (!response.ok) throw new Error();
 
         const updateUser = await response.json();
-
         localStorage.setItem("user", JSON.stringify(updateUser));
 
         bsModalEntrarGrupo.hide();
-        alert("Entrou no grupo com sucesso!");
-        location.reload();
+        mostrarToast("Entrou no grupo com sucesso!", "success");
+
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
 
     } catch (error) {
-        alert("Erro ao entrar no grupo");
+        mostrarToast("Erro ao entrar no grupo. Verifique o ID.", "danger");
     }
 });
 
-//Deletes
-//Deletar Tarefas
+// Deletar Tarefas
 async function deleteTask(taskId) {
-    await fetch(`https://pluck-qebe.onrender.com/tasks/${taskId}`, {
-        method: "DELETE"
-    });
-
-    alert("Tarefa excluida");
-    location.reload();
+    try {
+        await fetch(`https://pluck-qebe.onrender.com/tasks/${taskId}`, {
+            method: "DELETE"
+        });
+        mostrarToast("Tarefa excluída com sucesso!", "success");
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
+    } catch (error) {
+        mostrarToast("Erro ao excluir tarefa.", "danger");
+    }
 }
 
 // Deletar Usuário
 async function deleteUser(userId) {
-    await fetch(`https://pluck-qebe.onrender.com/users/${userId}`, {
-        method: "DELETE"
-    });
-    alert("Usuário excluido");
+    try {
+        await fetch(`https://pluck-qebe.onrender.com/users/${userId}`, {
+            method: "DELETE"
+        });
+        mostrarToast("Usuário excluído com sucesso!", "success");
+    } catch (error) {
+        mostrarToast("Erro ao excluir usuário.", "danger");
+    }
 }
 
 // Deletar Grupo
 async function deleteGroup(groupId) {
-    await fetch(`https://pluck-qebe.onrender.com/groups/${groupId}`, {
-        method: "DELETE"
-    });
-    alert("Grupo Excluido");
-    location.reload();
+    try {
+        await fetch(`https://pluck-qebe.onrender.com/groups/${groupId}`, {
+            method: "DELETE"
+        });
+        mostrarToast("Grupo excluído com sucesso!", "success");
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
+    } catch (error) {
+        mostrarToast("Erro ao excluir grupo.", "danger");
+    }
 }
 
 function loadUserData(){
@@ -315,9 +322,25 @@ function loadUserData(){
 
 async function loadGroupData () {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user)
     if (!user || !user.group) return;
     document.querySelector("#groupName").value = user.group.name || "Sem grupo";
     document.querySelector("#groupDescription").value = user.group.description || "Sem descrição";
     document.querySelector("#groupId").value = user.group.id || "";
+}
+
+// Função para mostrar notificações personalizadas e bonitas
+function mostrarToast(mensagem, tipo = 'success') {
+    const toastElement = document.getElementById('pluckToast');
+    const toastMessage = document.getElementById('toastMessage');
+
+    if (tipo === 'success') {
+        toastElement.style.backgroundColor = '#10b981'; // Verde moderno
+    } else {
+        toastElement.style.backgroundColor = '#ef4444'; // Vermelho moderno
+    }
+
+    toastMessage.textContent = mensagem;
+
+    const bsToast = new bootstrap.Toast(toastElement, { delay: 3000 });
+    bsToast.show();
 }

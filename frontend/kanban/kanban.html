@@ -16,6 +16,15 @@
 
 </head>
 <body>
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1090;">
+    <div id="pluckToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true" style="border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.15);">
+        <div class="d-flex">
+            <div class="toast-body fw-semibold" id="toastMessage">
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
 
 <div class="app-layout">
 
@@ -221,7 +230,7 @@
 
                 <div class="modal-header" style="border-bottom: 1px solid #edf2f9;">
                     <h5 class="modal-title fw-bold" id="modalTarefaLabel" style="color: #233975;">Nova Tarefa</h5>
-                    <button type="button" class="btn-close" data-bs-close="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
@@ -253,7 +262,7 @@
 
                 <div class="modal-header" style="border-bottom: 1px solid #edf2f9;">
                     <h5 class="modal-title fw-bold" id="modalCriarGrupoLabel" style="color: #233975;">Criar Novo Grupo</h5>
-                    <button type="button" class="btn-close" data-bs-close="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
@@ -280,7 +289,7 @@
 
                 <div class="modal-header" style="border-bottom: 1px solid #edf2f9;">
                     <h5 class="modal-title fw-bold" id="modalEntrarGrupoLabel" style="color: #233975;">Entrar em um Grupo</h5>
-                    <button type="button" class="btn-close" data-bs-close="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
