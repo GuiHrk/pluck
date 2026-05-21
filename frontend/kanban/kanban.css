@@ -266,3 +266,24 @@ body {
     border-radius: 12px;
     margin-bottom: 10px;
 }
+/* ==========================================
+   ESTILIZAÇÃO ADICIONAL DOS MODAIS (OPCIONAL)
+   ========================================== */
+.modal-content {
+    background: #ffffff;
+}
+
+/* Deixa as caixas de texto com o mesmo padrão visual dos cards */
+.modal-body .form-control {
+    border: 1px solid #e2e8f0;
+    font-size: 14px;
+    color: #1e293b;
+    transition: all 0.2s ease;
+}
+
+/* Efeito azul ao clicar para digitar dentro do popup */
+.modal-body .form-control:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    outline: none;
+}
