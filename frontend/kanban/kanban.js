@@ -1,3 +1,7 @@
+// Criamos as variáveis no escopo global para que as funções criarGrupo e entrarGrupo consigam acessá-las
+let bsModalCriarGrupo;
+let bsModalEntrarGrupo;
+
 document.addEventListener("DOMContentLoaded", async () => {
 
     const user = JSON.parse(localStorage.getItem("user"));
@@ -5,8 +9,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     if(!user) {
         alert("Usuário não encontrado");
         window.location.href = "https://pluck-woad.vercel.app/login/login.html";
-        return;    
+        return;
     }
+
+    // Inicializa as instâncias dos modais do Bootstrap de forma segura aqui dentro
+    bsModalCriarGrupo = new bootstrap.Modal(document.getElementById('modalCriarGrupo'));
+    bsModalEntrarGrupo = new bootstrap.Modal(document.getElementById('modalEntrarGrupo'));
 
     document.getElementById("btnCriarGrupo")
     .addEventListener("click", criarGrupo);
@@ -33,15 +41,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 function renderTasks(tasks) {
 
     const todo = document.querySelector("#todo .tasks-container");
-    const doing =document.querySelector("#doing .tasks-container"); 
-    const done = document.querySelector("#done .tasks-container");  
+    const doing =document.querySelector("#doing .tasks-container");
+    const done = document.querySelector("#done .tasks-container");
 
     todo.innerHTML = "";
     doing.innerHTML = "";
     done.innerHTML = "";
 
     tasks.forEach(task => {
-       
+
         const taskElement = document.createElement("div");
         taskElement.classList.add("task");
         taskElement.dataset.id = task.id;
@@ -197,11 +205,8 @@ function setupAddButtons(user) {
     }, { once: true }); // O { once: true } evita que o evento se duplique ao clicar várias vezes
 }
 
-const bsModalCriarGrupo = new bootstrap.Modal(document.getElementById('modalCriarGrupo'));
-const bsModalEntrarGrupo = new bootstrap.Modal(document.getElementById('modalEntrarGrupo'));
-
 async function criarGrupo() {
-    // Em vez do prompt, limpamos o form e abrimos o modal
+    // Agora a instância global bsModalCriarGrupo estará definida
     document.getElementById("formCriarGrupo").reset();
     bsModalCriarGrupo.show();
 }
@@ -225,7 +230,7 @@ document.getElementById("formCriarGrupo").addEventListener("submit", async (e) =
         if (!response.ok) throw new Error();
 
         bsModalCriarGrupo.hide();
-        alert("Grupo criado com sucesso!"); // Opcional: Depois dá para trocar por um toast ou modal de sucesso discreto
+        alert("Grupo criado com sucesso!");
         location.reload();
     } catch (error) {
         alert("Erro ao criar grupo");
@@ -233,7 +238,7 @@ document.getElementById("formCriarGrupo").addEventListener("submit", async (e) =
 });
 
 async function entrarGrupo() {
-    // Em vez do prompt, limpamos o form e abrimos o modal
+    // Agora a instância global bsModalEntrarGrupo estará definida
     document.getElementById("formEntrarGrupo").reset();
     bsModalEntrarGrupo.show();
 }
@@ -272,17 +277,17 @@ document.getElementById("formEntrarGrupo").addEventListener("submit", async (e) 
         alert("Erro ao entrar no grupo");
     }
 });
+
 //Deletes
-
 //Deletar Tarefas
-    async function deleteTask(taskId) {
-        await fetch(`https://pluck-qebe.onrender.com/tasks/${taskId}`, {
-            method: "DELETE"
-        });
+async function deleteTask(taskId) {
+    await fetch(`https://pluck-qebe.onrender.com/tasks/${taskId}`, {
+        method: "DELETE"
+    });
 
-        alert("Tarefa excluida");
-        location.reload();
-    }
+    alert("Tarefa excluida");
+    location.reload();
+}
 
 // Deletar Usuário
 async function deleteUser(userId) {
@@ -291,41 +296,28 @@ async function deleteUser(userId) {
     });
     alert("Usuário excluido");
 }
+
 // Deletar Grupo
 async function deleteGroup(groupId) {
     await fetch(`https://pluck-qebe.onrender.com/groups/${groupId}`, {
         method: "DELETE"
     });
-alert("Grupo Excluido");
-location.reload();
-
+    alert("Grupo Excluido");
+    location.reload();
 }
 
-function loadUserData(){ 
-
-const user = JSON.parse(localStorage.getItem("user"));
-
-if (!user) return;
-
-document.querySelector("#userName").value = user.name || "Usuário sem nome";
-
-document.querySelector("#userEmail").value = user.email || "Usuário sem email";
-
-
+function loadUserData(){
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) return;
+    document.querySelector("#userName").value = user.name || "Usuário sem nome";
+    document.querySelector("#userEmail").value = user.email || "Usuário sem email";
 }
 
 async function loadGroupData () {
-    
-const user = JSON.parse(localStorage.getItem("user")); 
-console.log(user)
-
-if (!user || !user.group) return;
-
-
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user)
+    if (!user || !user.group) return;
     document.querySelector("#groupName").value = user.group.name || "Sem grupo";
-
     document.querySelector("#groupDescription").value = user.group.description || "Sem descrição";
-
     document.querySelector("#groupId").value = user.group.id || "";
-
-} 
+}
