@@ -1,161 +1,302 @@
-body{
-    background: #f4f7fb;
+
+body {
+    background: linear-gradient(135deg, #4f73ca 0%, #3553a1 100%); /* Fundo azul moderno em degradê */
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Fonte mais moderna e limpa */
+    min-height: 100vh;
 }
 
 /* LAYOUT */
-
-.app-layout{
+.app-layout {
     display: flex;
     min-height: 100vh;
 }
 
-/* SIDEBAR */
-
-.sidebar{
-    width: 250px;
-    background: white;
-    border-right: 1px solid #ddd;
-    padding: 20px;
-
+/* ==========================================
+   SIDEBAR & ELEMENTOS EXTERNOS
+   ========================================== */
+.sidebar {
+    width: 260px;
+    background: rgba(255, 255, 255, 0.95);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 30px 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.logo{
-    font-weight: bold;
-    margin-bottom: 30px;
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: #233975;
+    margin-bottom: 40px;
+    letter-spacing: -0.5px;
 }
 
-.sidebar-btn{
+.sidebar-btn {
     border: none;
     background: transparent;
     text-align: left;
-    padding: 12px;
-    border-radius: 10px;
-
-    transition: 0.2s;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-weight: 600;
+    color: #64748b;
+    transition: all 0.2s ease;
 }
 
-.sidebar-btn:hover{
-    background: #f1f1f1;
+.sidebar-btn:hover {
+    background: #f1f5f9;
+    color: #334155;
 }
 
-.sidebar-btn.active{
-    background: #0d6efd;
+.sidebar-btn.active {
+    background: #3b82f6;
     color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
 }
 
-/* MAIN */
-
-.main-content{
+/* MAIN CONTENT */
+.main-content {
     flex: 1;
-    padding: 30px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
 }
 
 /* TOPBAR */
-
-.topbar{
+.topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
-/* BOARD */
-
-.board{
-    display: flex;
-    gap: 20px;
-
-    overflow-x: auto;
+.topbar h2 {
+    color: white; ul
+    font-weight: 700;
 }
 
-/* COLUMN */
-
-.column{
-    min-width: 320px;
-
-    background: #e9edf5;
-
-    border-radius: 15px;
-
-    padding: 20px;
-
-    min-height: 500px;
-}
-
-/* BOTÃO */
-
-.add-btn{
-    border: none;
-    background: transparent;
-
-    color: #0d6efd;
-
-    font-weight: bold;
-}
-.kanban-wrapper{
+/* ==========================================
+   BOARD & COLUNAS (ESTILO IGUAL À IMAGEM)
+   ========================================== */
+.kanban-wrapper {
     flex: 1;
-}
-
-.footer{
-    margin-top: auto;
-
-    background: #0d6efd;
-
-    color: white;
-
-    padding: 20px;
-
-    border-radius: 12px 12px 0 0;
-}
-
-.footer a{
-    color: white;
-    text-decoration: none;
-}
-
-.member-card{
     display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    background: #f1f1f1;
-
-    padding: 10px;
-
-    border-radius: 10px;
-
-    margin-bottom: 10px;
-}
-.task {
-    background: white;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    cursor: grab;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.task.dragging {
-    opacity: 0.5;
-    transform: rotate(2deg);
+.board {
+    display: flex;
+    gap: 25px;
+    overflow-x: auto;
+    padding: 25px;
+    align-items: flex-start;
+
+
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    width: 100%;
 }
 
-.tasks-container {
-    min-height: 200px;
-}
+/* COLUNA INDIVIDUAL */
 .column {
-    min-height: 500px;
-}
-.tasks-container {
+    min-width: 300px;
+    max-width: 320px;
+    background: #edf2f9;
+    border-radius: 24px;
+    padding: 24px 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+/* ESTILIZAÇÃO DOS TÍTULOS (BADGES DE STATUS) */
+.column h5 {
+    display: inline-flex;
+    align-self: flex-start;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 12px;
+    margin: 0;
+}
+
+/* Cores específicas para cada badge baseado no ID da coluna */
+#todo h5 {
+    background-color: #e0eaffe;
+    color: #2563eb;
+}
+
+#doing h5 {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+#done h5 {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+/* CONTAINER DAS TAREFAS */
+.tasks-container {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ==========================================
+   CARDS DE TAREFAS (TASKS)
+   ========================================== */
+.task {
+    background: white;
+    padding: 20px;
+    border-radius: 18px;
+    cursor: grab;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    border-left: 5px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+    border-left-color: #2563eb;
+}
+
+#doing .task {
+    border-left-color: #ffb020;
+}
+
+#done .task {
+    border-left-color: #10b981;
+}
+
+/* Estado de Dragging */
+.task.dragging {
+    opacity: 0.4;
+    transform: scale(0.98) rotate(1deg);
+}
+
+/* BOTÃO DE ADICIONAR TAREFA */
+.add-btn {
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: left;
+    padding: 8px 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.add-btn:hover {
+    color: #3b82f6;
+}
+
+/* ==========================================
+   FOOTER & COMPONENTES EXTRAS
+   ========================================== */
+.footer {
+    margin-top: auto;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 20px 0 0 0;
+    font-size: 14px;
+}
+
+.footer a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer a:hover {
+    color: white;
+}
+
+.member-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f5f9;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+/* ==========================================
+   AJUSTES NOS CARDS E BOTÃO DE EXCLUIR
+   ========================================== */
+
+
+.task {
+    position: relative;
+    padding-top: 18px;
+    padding-right: 35px;
+
+
+.task strong {
+    font-size: 15px;
+    color: #1e293b;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+
+.task small, .task span {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/
+.task button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    /
+    font-size: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+
+.task button::before {
+    content: "✕";
+    font-size: 14px;
+    font-weight: bold;
+    color: #94a3b8;
+}
+
+
+.task button:hover {
+    background-color: #fee2e2;
+}
+
+.task button:hover::before {
+    color: #ef4444;
 }
