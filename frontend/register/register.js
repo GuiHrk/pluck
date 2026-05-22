@@ -44,18 +44,29 @@ form.addEventListener("submit", async (e) => {
  });
 }
 
-// Função para mostrar notificações personalizadas e bonitas
+
+// Função para mostrar notificações personalizadas e bonitas usando o Bootstrap
 function mostrarToast(mensagem, tipo = 'success') {
     const toastElement = document.getElementById('pluckToast');
     const toastMessage = document.getElementById('toastMessage');
+    const toastIcon = document.getElementById('toastIcon');
 
     if (tipo === 'success') {
-        toastElement.style.backgroundColor = '#10b981'; // Verde moderno
+        // Verde esmeralda moderno com 90% de opacidade para o efeito blur
+        toastElement.style.backgroundColor = 'rgba(16, 185, 129, 0.92)';
+        toastElement.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+        toastIcon.innerHTML = '✨'; // Ícone de sucesso
     } else {
-        toastElement.style.backgroundColor = '#ef4444'; // Vermelho moderno
+        // Vermelho rubi moderno com 90% de opacidade
+        toastElement.style.backgroundColor = 'rgba(239, 68, 68, 0.92)';
+        toastElement.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+        toastIcon.innerHTML = '⚠️'; // Ícone de atenção/erro
     }
 
-    toastMessage.textContent = mensaje;
+    toastMessage.textContent = mensagem;
+
+    // Força o display block para a animação do Bootstrap funcionar
+    toastElement.style.display = 'block';
 
     const bsToast = new bootstrap.Toast(toastElement, { delay: 3000 });
     bsToast.show();

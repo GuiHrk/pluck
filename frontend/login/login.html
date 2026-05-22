@@ -12,13 +12,17 @@
 
 <body>
 
-<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1090;">
-    <div id="pluckToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true" style="border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); transition: all 0.3s ease;">
-        <div class="d-flex">
-            <div class="toast-body fw-semibold" id="toastMessage">
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+<div id="pluckToast" class="toast text-white border-0" role="alert" aria-live="assertive" aria-atomic="true"
+     style="position: fixed !important; top: 24px !important; right: 24px !important; z-index: 99999 !important;
+            border-radius: 16px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25); min-width: 320px; display: none;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+    <div class="d-flex align-items-center" style="padding: 16px;">
+        <div id="toastIcon" style="font-size: 20px; margin-right: 12px; display: flex; align-items-center;"></div>
+
+        <div class="toast-body fw-medium" id="toastMessage" style="font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; flex-grow: 1; letter-spacing: -0.2px; line-height: 1.4;">
         </div>
+
+        <button type="button" class="btn-close btn-close-white ms-auto me-1" data-bs-dismiss="toast" aria-label="Close" style="box-shadow: none; opacity: 0.6; width: 0.8em; height: 0.8em;"></button>
     </div>
 </div>
 
